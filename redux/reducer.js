@@ -1,6 +1,7 @@
 
 const initialState = {
-    dataFromLS: [],
+    featureList: [],
+    compareList: {},
 };
 const reducer = (state = initialState, action) => {
     const newState = { ...state };
@@ -8,7 +9,8 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "FETCH_ITEM_SUCCESS":
             console.log("Inside reducer", action.result)
-            newState.dataFromLS = "";
+            newState.featureList = action.result.featuresList;
+            newState.compareList = action.result.compareSummary;
             break;
     }
     return newState;
