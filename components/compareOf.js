@@ -1,12 +1,10 @@
-import { Component, PureComponent } from "react";
+import { PureComponent } from "react";
 
 
 export default class compareOf extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = {
 
-        }
     }
 
     render() {

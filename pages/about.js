@@ -8,7 +8,7 @@ export default function About() {
         <div>
             <Header />
             <Layout >
-                About Project release management!
+                Tila Assignment , about Comparing two products!
             </Layout>
 
 

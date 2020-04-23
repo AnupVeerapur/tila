@@ -1,8 +1,5 @@
 import React, { Component, useState, version } from "react";
-import {
-    Table, Tag, Form, Checkbox, InputNumber, Popconfirm, Row, Col, Dropdown,
-    Progress, DatePicker, Select, Slider, Popover, Button, Modal, Badge
-} from 'antd';
+import { Checkbox, Row, Col, Select } from 'antd';
 import actions from "../redux/action";
 import { connect } from "react-redux";
 import CompareOf from "../components/compareOf";
