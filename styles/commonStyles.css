@@ -45,3 +45,78 @@
     text-align: right;
     padding-right: 50px;
 }
+
+
+.closeCompare {
+    font-size: 25px;
+    color: darkgray !important;
+    top: 0px;
+    right: 35%;
+    position: absolute;
+}
+
+.baseClass{
+    width: 90%;
+    margin-left: 2%;
+}
+
+.featureTitle{
+    font-weight: 700;
+    background-color:#F2EFEF;
+}
+
+.featureHeaderFont{
+    font-weight: 500;
+}
+
+.c1title{
+    font-weight: 500;
+}
+
+.colRight{
+    border-right: 1px solid #F2EFEF;
+}
+
+.leftPad{
+    padding-left: 20px;
+}
+
+.pageHead{
+    font-weight: 600;
+
+}
+
+.imgPlaceholder{
+    width: 200px;
+    height: 100px;
+    margin-bottom: 10px;
+    padding: 20px;
+    background-color: #F2EFEF;
+}
+
+.selectSection{
+    width: 200px;
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+}
+
+.checkText{
+    bottom: 40px;
+    position: absolute;
+    font-weight: 500;
+}
+
+.price1{
+    font-weight: 800;
+    margin-right: 10px;
+}
+.price2{
+    font-size: 14px;
+    font-weight: 500;
+    color : #BAC3B3;
+    margin-right: 10px;    
+}
+.price3{
+    color: #61CC16 !important;
+    font-weight: 500;
+}

@@ -9,8 +9,8 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case "FETCH_ITEM_SUCCESS":
             console.log("Inside reducer", action.result)
-            newState.featureList = action.result.featuresList;
-            newState.compareList = action.result.compareSummary;
+            newState.featureList = action.result.products.featuresList;
+            newState.compareList = action.result.products.compareSummary;
             break;
     }
     return newState;
