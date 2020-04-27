@@ -66,7 +66,7 @@ class CompareList extends Component {
     }
 
     render() {
-
+        console.log("redner")
         let f1 = this.props.featureListData;
         let c1 = this.props.compareListData;
         let { rightItem, rightDropdown, leftDropdown, leftItem, countSel, showOnlyDiff } = this.state;
