@@ -14,9 +14,9 @@ export default class compareOf extends PureComponent {
             <>
                 {itemId && c1.images ?
                     <div>
-                        <img alt="example"
+                        <img alt="comimg"
                             src={c1.images[itemId]}
-                            style={{ width: "250px", height: "150px" }}
+                            style={{ width: "205px", height: "150px" }}
                         />
                     </div>
                     : ""}

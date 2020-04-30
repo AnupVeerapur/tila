@@ -53,7 +53,23 @@ function* onFetchItem() {
     }
 }
 
+function* onAddItem(payload) {
+    console.log("Inside sAga On add Item", payload);
+    let delArr = payload.payload.arr;
+    let xind = delArr.indexOf(payload.payload.value);
+    delArr.splice(xind, 1);
+    yield put(actions.onAddItemSuccess(delArr));
+}
+
+function* onDeleteItem(payload) {
+    console.log("Inside sAga On delete Item")
+    yield put(actions.onDeleteItemSuccess(payload));
+}
+
+
 
 export default function* rootSaga() {
     yield takeEvery("FETCH_ITEM", onFetchItem);
+    yield takeEvery("ON_ADD_ITEM", onAddItem);
+    yield takeEvery("ON_DELETE_ITEM", onDeleteItem);
 }

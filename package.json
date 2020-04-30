@@ -1,8 +1,8 @@
 {
   "homepage": "http://anupsv1989.github.io/PMA",
-  "name": "PMA",
+  "name": "Tila",
   "version": "1.0.0",
-  "description": "Project management app",
+  "description": "Tila Compare App",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,16 +12,9 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d .next"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/anupsv1989/PMA.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/anupsv1989/PMA/issues"
-  },
   "dependencies": {
     "antd": "^4.0.4",
     "next": "^9.3.2",

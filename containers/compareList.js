@@ -4,8 +4,9 @@ import actions from "../redux/action";
 import { connect } from "react-redux";
 import CompareOf from "../components/compareOf";
 import { CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons';
+import SelectBox from "./selectBox";
 
-const { onFetchItem } = actions;
+const { onFetchItem, onAddItem } = actions;
 
 // Expects - redux for listing object
 // Caters other components and passes props such as data and redux methods
@@ -14,12 +15,10 @@ class CompareList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            leftDropdown: true,
-            rightDropdown: true,
-            leftId: "",
-            countSel: 0,
-            rightId: "",
-            showOnlyDiff: false
+            activeId: "",
+            itemsInDisplay: [],
+            updatedDDData: [],
+            countSel: 0
         }
     }
 
@@ -27,169 +26,151 @@ class CompareList extends Component {
         this.props.onFetchItem();
     }
 
-    showDifferences = (e) => {
+
+
+    onDDChange = (value) => {
+        console.log("On change of value : ", value)
+
+        let tempDispArr = this.state.itemsInDisplay;
+        tempDispArr.push(value);
+
         this.setState({
-            showOnlyDiff: e.target.checked
+            activeId: value,
+            [value]: true,
+            itemsInDisplay: tempDispArr,
+            countSel: this.state.countSel + 1
+        })
+
+        let payload = {
+            value: value,
+            arr: this.props.listOfDDItemsData
+        }
+        this.props.onAddItem(payload)
+    }
+
+    handleCloseItem = (e, activeId) => {
+        console.log("Active id to close : ", activeId)
+        this.setState({
+            [activeId]: false
         })
     }
 
-    showLeftDropdown = () => {
-        this.setState({
-            leftDropdown: true,
-            leftItem: "",
-            countSel: this.state.countSel - 1
-        })
-    }
-    showRightDropdown = () => {
-        this.setState({
-            rightDropdown: true,
-            rightItem: "",
-            countSel: this.state.countSel - 1
-        })
+    componentWillReceiveProps(nextProps) {
+        if (this.props.listOfDDItemsData != nextProps.listOfDDItemsData) {
+            this.setState({
+                updatedDDData: nextProps.listOfDDItemsData,
+            })
+        }
     }
 
-    handleLeftChange = (value) => {
-        console.log("value of dropdown", value)
-        this.setState({
-            leftDropdown: false,
-            leftItem: value,
-            countSel: this.state.countSel + 1
-        })
-    }
-    handleRightChange = (value) => {
-        console.log("value of dropdown", value)
-        this.setState({
-            rightDropdown: false,
-            rightItem: value,
-            countSel: this.state.countSel + 1
-        })
-    }
 
     render() {
-        console.log("redner")
-        let f1 = this.props.featureListData;
-        let c1 = this.props.compareListData;
-        let { rightItem, rightDropdown, leftDropdown, leftItem, countSel, showOnlyDiff } = this.state;
-        console.log("f111111111111111", f1)
+        // console.log("DD List ------------------------>", this.props.listOfDDItemsData)
+        console.log("DD state Display List", this.state.itemsInDisplay)
+        // console.log("DD List listOfTotalItemsData", this.props.listOfTotalItemsData)
+        let { listOfTotalItemsData, compareListData, featureListData, listOfDDItemsData } = this.props;
+        let { activeId, itemsInDisplay, countSel } = this.state;
+        let sendDDData = this.state.updatedDDData;
+        console.log("featureListData Data ---------------------->", featureListData)
         return (
             <div className="baseClass">
-                {f1.length > 0 ?
-                    <div>
+                <Row>
+                    <Col span={6}>
                         <div>
-                            {c1 ?
-                                <Row>
-                                    <Col span={8}>
-                                        <div>
-                                            <div className="pageHead">Compare Items</div>
-                                            <div >
-                                                <span>{countSel}  items selected </span>
-                                            </div>
-                                            <div className="checkText">
-                                                {countSel == 2 ?
-                                                    <Checkbox onChange={this.showDifferences}>
-                                                        Show only differences
+                            <div className="pageHead">Compare Items</div>
+                            <div >
+                                <span>{countSel}  items selected </span>
+                            </div>
+                            <div className="checkText">
+                                {countSel > 1 ?
+                                    <Checkbox onChange={this.showDifferences}>
+                                        Show only differences
                                         </Checkbox> : ""}
-                                            </div>
-                                        </div>
-                                    </Col>
-                                    {/* Left Item */}
-                                    <Col span={8}>
+                            </div>
+                        </div>
+                    </Col>
+                    {itemsInDisplay && itemsInDisplay.map(item =>
+                        <Col span={4}>
+                            <div>
+                                <div>
+                                    <CompareOf c1={compareListData} itemId={item} />
+                                    <CloseCircleOutlined className="closeCompare" onClick={(e) => this.handleCloseItem(e, activeId)} />
+                                </div>
+                            </div>
+                        </Col>
+                    )}
+                    {listOfDDItemsData && listOfDDItemsData.map(item =>
+                        <Col key={item} span={4}>
+                            <div>
+                                <div className="imgPlaceholder" />
+                                <div>Add a product</div>
+                                <SelectBox
+                                    onDDChange={this.onDDChange}
+                                />
+                            </div>
+                        </Col>
+                    )}
+                </Row>
+                {/* <Row>
+                    <Col span={6}>
+                        ksldfjsdlfkjsdlkf
+                    </Col>
+                    <Col span={4}>
+                        dfklsdjfklsdf
+                    </Col>
+                    <Col span={4}>
+                        kfdsljfsdf
+                    </Col>
+                    <Col span={4}>
+                        sdfsdfsdfdsffds
+                    </Col>
+                    <Col span={4}>
+                        sdfdsfdsfsdfsdfsdfds
+                    </Col>
+                </Row> */}
+                <Row>
+                    <div style={{ width: "100%" }}>
+                        {featureListData ?
+                            featureListData.map(disp =>
+                                <div key={disp}>
+                                    <div className="featureTitle">{disp.title}</div>
+                                    {disp.features.map(item =>
                                         <div>
-                                            {c1.productPricingSummary && leftDropdown ?
-                                                <div>
-                                                    <div className="imgPlaceholder" />
-                                                    <div>Add a product</div>
-                                                    <Select placeholder="Choose a product" className="selectSection" onChange={this.handleLeftChange}>
-                                                        {Object.keys(c1.productPricingSummary).map(item =>
-                                                            <Option value={item}> {item} </Option>
-                                                        )}
-                                                    </Select>
-                                                </div>
-                                                :
-                                                <div>
-                                                    <CompareOf c1={c1} itemId={leftItem} />
-                                                    <CloseCircleOutlined className="closeCompare" onClick={this.showLeftDropdown} />
-                                                </div>
-                                            }
+                                            <Row>
+                                                <Col span={6} className="featureHeaderFont">
+                                                    {item.featureName}
+                                                </Col>
+                                                {itemsInDisplay && itemsInDisplay.map(x =>
+                                                    <Col span={4} className="">
+                                                        {item.values[x]}
+                                                    </Col>
+                                                )}
+                                            </Row>
                                         </div>
-                                    </Col>
-                                    {/* Right Item */}
-                                    <Col span={8}>
-                                        <div>
-                                            {c1.productPricingSummary && rightDropdown ?
-                                                <div>
-                                                    <div className="imgPlaceholder" />
-                                                    <div>Add a product</div>
-                                                    <Select placeholder="Choose a product" className="selectSection" onChange={this.handleRightChange}>
-                                                        {Object.keys(c1.productPricingSummary).map(item =>
-                                                            <Option value={item}> {item} </Option>
-                                                        )}
-                                                    </Select>
-                                                </div>
-                                                :
-                                                <div>
-                                                    <CompareOf c1={c1} itemId={rightItem} />
-                                                    <CloseCircleOutlined className="closeCompare" onClick={this.showRightDropdown} />
-                                                </div>
-                                            }
-                                        </div>
-                                    </Col>
-                                </Row>
-                                : ""
-                            }
-                        </div>
-                        <div>
-                            {f1 ?
-                                f1.map(disp =>
-                                    <div key={disp}>
-                                        <div className="featureTitle">{disp.title}</div>
-                                        {disp.features.map(item =>
-                                            <div>
-                                                {showOnlyDiff && (item.values[leftItem] == item.values[rightItem]) ? "" :
-                                                    <Row key={item}>
-                                                        <Col span={8} className="featureHeaderFont colRight leftPad">
-                                                            {item.featureName}
-                                                        </Col>
-                                                        {/* if checkbox show only differences */}
-
-                                                        < Col span={8} className="colRight leftPad">
-                                                            {item.values[leftItem]}
-                                                        </Col>
-                                                        <Col span={8} className="leftPad">
-                                                            {item.values[rightItem]}
-                                                        </Col>
-                                                    </Row>
-                                                }
-                                            </div>
-                                        )
-                                        }
-                                    </div>
-                                )
-                                : ""
-                            }
-                        </div>
+                                    )
+                                    }
+                                </div>
+                            )
+                            : ""
+                        }
                     </div>
-                    :
-                    <div className="loader">
-                        <div>
-                            <LoadingOutlined />
-                        </div>
-                                Loading, Please wait .......
-                    </div>
-                }
-            </div>
+                </Row>
+            </div >
         )
+
     }
 }
 
 const mapStateToProps = state => {
     return {
         compareListData: state.compareList,
-        featureListData: state.featureList
+        featureListData: state.featureList,
+        listOfTotalItemsData: state.listOfTotalItems,
+        listOfDDItemsData: state.listOfDDItems.value,
     };
 };
 
 
 export default connect(
-    mapStateToProps, { onFetchItem }
+    mapStateToProps, { onFetchItem, onAddItem }
 )(CompareList);
