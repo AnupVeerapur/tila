@@ -131,7 +131,7 @@ class CompareList extends Component {
                         </Col>
                     )}
                     {listOfDDItemsData && listOfDDItemsData.map(item =>
-                        <Col key={item} span={5}>
+                        <Col key={this.state.countSel + "_" + item} span={5}>
                             <div>
                                 <div className="imgPlaceholder" />
                                 <div>Add a product</div>
