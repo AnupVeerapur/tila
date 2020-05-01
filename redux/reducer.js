@@ -46,48 +46,24 @@ const reducer = (state = initialState, action) => {
 
         case "ON_ADD_ITEM_SUCCESS":
             let aCT = action.payload;
-            console.log("add item itemm ::::::::::: ", aCT)
-
-            // let tempDispArr = a.dispArrItems;
-            // tempDispArr.push(a.itemId)
-
-            // to remove selected item from dd ,  as to remove duplication of comparision
-            // let a = ["TVSF2WYXTKAR7RAF", "TVSF2WYUE4PWNJKM", "TVSE8FMZ9AQMEGC6", "TVSF3J7HUJF5XUBT"]
-            // let ad = ["TVSF2WYXTKAR7RAF", "TVSF2WYUE4PWNJKM", "TVSE8FMZ9AQMEGC6"]
-
-            console.log("add item itemm all ::::::::::: ", aCT);
             newState.listOfDDItems = {
                 value: aCT
             };
-            // newState.listOfItemsToDisplay = {
-            //     value: aCT
-            // };
-
             break;
 
         case "ON_DELETE_ITEM":
 
-            newState.listOfAllItemsRed = [];
-            newState.dispArrItemsRed = [];
+            newState.listOfDDItems = {};
+            newState.listOfItemsToDisplay = {};
             break;
 
         case "ON_DELETE_ITEM_SUCCESS":
-
-            let b = action.payload.payload;
-            let tempArrDel = b.listOfAllItems;
-            tempArrDel.push(b.itemId);
-
-            let tempDispArr = b.dispArrItems;
-            console.log("temp disp arrr ::::::::::: ", tempDispArr)
-            let xindel = tempDispArr.indexOf(b.itemId);
-            tempDispArr.splice(xindel, 1)
-            console.log("temp disp arrr ::::::::::: after >>>>>>>>", tempDispArr)
-            newState.listOfAllItemsRed = tempArrDel;
-            newState.dispArrItemsRed = tempDispArr;
+            // Add items again in dropdown options as it is removed from list
+            let delAct = action.payload;
+            newState.listOfDDItems = {
+                value: delAct
+            };
             break;
-
-
-
     }
     return newState;
 };

@@ -4,9 +4,9 @@ import actions from "../redux/action";
 import { connect } from "react-redux";
 import CompareOf from "../components/compareOf";
 import { CloseCircleOutlined, LoadingOutlined } from '@ant-design/icons';
-import SelectBox from "./selectBox";
+import SelectBox from "../components/selectBox";
 
-const { onFetchItem, onAddItem } = actions;
+const { onFetchItem, onAddItem, onDeleteItem } = actions;
 
 // Expects - redux for listing object
 // Caters other components and passes props such as data and redux methods
@@ -15,10 +15,10 @@ class CompareList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeId: "",
             itemsInDisplay: [],
             updatedDDData: [],
-            countSel: 0
+            countSel: 0,
+            showOnlyDiff: false,
         }
     }
 
@@ -35,7 +35,6 @@ class CompareList extends Component {
         tempDispArr.push(value);
 
         this.setState({
-            activeId: value,
             [value]: true,
             itemsInDisplay: tempDispArr,
             countSel: this.state.countSel + 1
@@ -48,11 +47,22 @@ class CompareList extends Component {
         this.props.onAddItem(payload)
     }
 
-    handleCloseItem = (e, activeId) => {
-        console.log("Active id to close : ", activeId)
+    handleCloseItem = (e, closeId) => {
+
+        let tempDispArr = this.state.itemsInDisplay;
+        let indx = tempDispArr.indexOf(closeId);
+        tempDispArr.splice(indx, 1);
+
         this.setState({
-            [activeId]: false
+            [closeId]: false,
+            itemsInDisplay: tempDispArr,
+            countSel: this.state.countSel - 1
         })
+        let payload = {
+            value: closeId,
+            arr: this.props.listOfDDItemsData
+        }
+        this.props.onDeleteItem(payload)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -63,19 +73,37 @@ class CompareList extends Component {
         }
     }
 
+    showDifferences = (e) => {
+        this.setState({
+            showOnlyDiff: e.target.checked
+        })
+    }
+
+    checkKey = (item, ind) => {
+        console.log(item, ind)
+        if (this.state.showOnlyDiff) {
+            let cnt = 0;
+            let temp = item.values[this.state.itemsInDisplay[0]];
+            this.state.itemsInDisplay.map((items) => {
+                if (temp === item.values[items]) {
+                    cnt++;
+                }
+            })
+            if (cnt == this.state.itemsInDisplay.length) {
+                return false;
+            }
+        }
+        return true;
+
+    }
 
     render() {
-        // console.log("DD List ------------------------>", this.props.listOfDDItemsData)
-        console.log("DD state Display List", this.state.itemsInDisplay)
-        // console.log("DD List listOfTotalItemsData", this.props.listOfTotalItemsData)
         let { listOfTotalItemsData, compareListData, featureListData, listOfDDItemsData } = this.props;
-        let { activeId, itemsInDisplay, countSel } = this.state;
-        let sendDDData = this.state.updatedDDData;
-        console.log("featureListData Data ---------------------->", featureListData)
+        let { itemsInDisplay, countSel } = this.state;
         return (
             <div className="baseClass">
                 <Row>
-                    <Col span={6}>
+                    <Col span={4}>
                         <div>
                             <div className="pageHead">Compare Items</div>
                             <div >
@@ -90,17 +118,20 @@ class CompareList extends Component {
                         </div>
                     </Col>
                     {itemsInDisplay && itemsInDisplay.map(item =>
-                        <Col span={4}>
+                        <Col span={5} >
                             <div>
                                 <div>
                                     <CompareOf c1={compareListData} itemId={item} />
-                                    <CloseCircleOutlined className="closeCompare" onClick={(e) => this.handleCloseItem(e, activeId)} />
+                                    <CloseCircleOutlined
+                                        className="closeCompare"
+                                        onClick={(e) => this.handleCloseItem(e, item)}
+                                    />
                                 </div>
                             </div>
                         </Col>
                     )}
                     {listOfDDItemsData && listOfDDItemsData.map(item =>
-                        <Col key={item} span={4}>
+                        <Col key={item} span={5}>
                             <div>
                                 <div className="imgPlaceholder" />
                                 <div>Add a product</div>
@@ -111,41 +142,25 @@ class CompareList extends Component {
                         </Col>
                     )}
                 </Row>
-                {/* <Row>
-                    <Col span={6}>
-                        ksldfjsdlfkjsdlkf
-                    </Col>
-                    <Col span={4}>
-                        dfklsdjfklsdf
-                    </Col>
-                    <Col span={4}>
-                        kfdsljfsdf
-                    </Col>
-                    <Col span={4}>
-                        sdfsdfsdfdsffds
-                    </Col>
-                    <Col span={4}>
-                        sdfdsfdsfsdfsdfsdfds
-                    </Col>
-                </Row> */}
                 <Row>
                     <div style={{ width: "100%" }}>
                         {featureListData ?
                             featureListData.map(disp =>
                                 <div key={disp}>
                                     <div className="featureTitle">{disp.title}</div>
-                                    {disp.features.map(item =>
+                                    {disp.features.map((item, ind) =>
                                         <div>
-                                            <Row>
-                                                <Col span={6} className="featureHeaderFont">
-                                                    {item.featureName}
-                                                </Col>
-                                                {itemsInDisplay && itemsInDisplay.map(x =>
-                                                    <Col span={4} className="">
-                                                        {item.values[x]}
+                                            {this.checkKey(item, ind) ?
+                                                <Row>
+                                                    <Col span={4} className="featureHeaderFont">
+                                                        {item.featureName}
                                                     </Col>
-                                                )}
-                                            </Row>
+                                                    {itemsInDisplay && itemsInDisplay.map((x) =>
+                                                        <Col span={5} className="">
+                                                            {item.values[x]}
+                                                        </Col>
+                                                    )}
+                                                </Row> : ""}
                                         </div>
                                     )
                                     }
@@ -172,5 +187,5 @@ const mapStateToProps = state => {
 
 
 export default connect(
-    mapStateToProps, { onFetchItem, onAddItem }
+    mapStateToProps, { onFetchItem, onAddItem, onDeleteItem }
 )(CompareList);

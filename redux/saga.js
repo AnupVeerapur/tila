@@ -54,7 +54,6 @@ function* onFetchItem() {
 }
 
 function* onAddItem(payload) {
-    console.log("Inside sAga On add Item", payload);
     let delArr = payload.payload.arr;
     let xind = delArr.indexOf(payload.payload.value);
     delArr.splice(xind, 1);
@@ -62,8 +61,9 @@ function* onAddItem(payload) {
 }
 
 function* onDeleteItem(payload) {
-    console.log("Inside sAga On delete Item")
-    yield put(actions.onDeleteItemSuccess(payload));
+    let tempDispArr = payload.payload.arr;
+    tempDispArr.push(payload.payload.value);
+    yield put(actions.onDeleteItemSuccess(tempDispArr));
 }
 
 
