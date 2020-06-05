@@ -15,8 +15,7 @@ module.exports = ({
     },
     exportPathMap: function () { // /Next-React-Components
         return {
-            "/": { page: "/" },
-            "/index": { page: "/index" }
+            "/": { page: "/" }
         }
     },
     assetPrefix: assetPrefix,
