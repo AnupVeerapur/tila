@@ -1,15 +1,14 @@
 {
-  "name": "Tila",
+  "homepage": "http://AnupVeerapur.github.io/LayoutPOC",
+  "name": "Position2-POC",
   "version": "1.0.0",
-  "description": "Tila Compare App",
+  "description": "Position2 POC",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "next",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d .next"
+    "deploy": "next build && next export -o docs && git add . && git commit -m \"Deploy gh-pages\" && git push origin master && gh-pages -d docs -t true"
   },
   "keywords": [],
   "author": "",

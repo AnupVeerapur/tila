@@ -4,42 +4,6 @@
     padding-top: 5px;
 }
 
-.ant-modal-content{
-    width: 1000px;
-    top: 10%;
-    position: relative;
-    right: 50%;
-}
-
-.modal-Layout{
-    width: 700px;
-    height: 400px;
-}
-
-.action-button-bg{
-    background-color: #75b6eb;
-    margin: 5px;
-    border-radius: 5px;
-}
-
-.parent-release-sec{
-    background-color: #fafafa;
-    width: 100%;
-    padding-top: 22px;
-    padding-left: 20px;
-}
-
-.parent-release-sec-col {
-    padding : 5px;
-}
-
-.left-addCol{
-    margin-right: 30px;
-}
-
-.enddate-align{
-    padding-left: 20px;
-}
 
 .btn-add-child{
     text-align: right;
@@ -56,85 +20,209 @@
 }
 
 .baseClass{
-    width: 90%;
-    margin-left: 2%;
+    /* width: 90%;
+    margin-left: 2%; */
+    position: relative;
 }
 
-.featureTitle{
-    font-weight: 700;
-    background-color:#F2EFEF;
+.baseClass3{
+    height: 72vh;
 }
 
-.featureHeaderFont{
+.header-usr-logo{
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+}
+
+.header-right-icon{
+    margin-right: 20px;
+}
+
+.header-right-div{
+    float: right;
+     width: 25%;
+      text-align: right;
+       color: #fff;
+}
+
+.header-left-div{
+    float: left;
+     width: 75%;
+}
+
+.site-layout-content {
+  background: #fff;
+  padding: 24px;
+  min-height: 280px;
+}
+.logo {
+  max-width: 120px;
+  max-height: 31px;  
+  object-fit: cover; 
+  margin-right:25px;
+  margin-top: -2px;
+  float: left;
+}
+
+.logo > img{
+    width: 120px;
+     height: 46px;
+}
+.mid-pane-list{
+    /* background-color: dimgrey; */
+}
+
+.mid-pane-list > li{
+    padding: 5px;
+    border-bottom: 1px solid lightslategray;
+}
+
+.ant-drawer-content-wrapper{
+    top : 65px !important;
+    border-radius: 10px;
+    height: 80vh;
+}
+
+.ant-drawer-body{
+    padding: 0px !important;
+    height: 80vh;
+}
+
+.ant-drawer-content{
+    height: 80vh;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.rightPanel-base{
+    padding: 10px;
+}
+.ant-layout-header header{
+    padding: 0 10px !important;
+}
+
+.rp-header{
+    background-color: #fafafa;
+    padding: 5px;
+    font-size: 16px;
     font-weight: 500;
+    position: relative;
+    min-height: 30px;
 }
-
-.c1title{
-    font-weight: 500;
-}
-
-.colRight{
-    border-right: 1px solid #F2EFEF;
-}
-
-.leftPad{
-    padding-left: 20px;
-}
-
-.pageHead{
-    font-weight: 600;
-
-}
-
-.imgPlaceholder{
-    width: 200px;
-    height: 100px;
-    margin-bottom: 10px;
-    padding: 20px;
-    background-color: #F2EFEF;
-}
-
-.selectSection{
-    width: 200px;
-    margin-top: 10px !important;
-    margin-bottom: 5px !important;
-}
-
-.checkText{
-    bottom: 40px;
+.rp-icons-header{
+    margin-right: 0px !important;
     position: absolute;
-    font-weight: 500;
 }
 
-.price1{
-    font-weight: 800;
-    margin-right: 10px;
-}
-.price2{
-    font-size: 14px;
-    font-weight: 500;
-    color : #BAC3B3;
-    margin-right: 10px;    
-}
-.price3{
-    color: #61CC16 !important;
-    font-weight: 500;
+.rp-icons{
+    padding-right: 7px;
+    font-size: 16px;
 }
 
-.loader{
-    display: inline-block;
+/* chat css */
+
+/* carousel */
+
+.ant-carousel .slick-slide {
+  text-align: center;
+  height: 160px;
+  line-height: 160px;
+  background: #364d79;
+  overflow: hidden;
+}
+
+.ant-carousel .slick-slide h3 {
+  color: #fff;
+}
+
+/* carousel end  */
+
+.container {
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  margin: 10px 0;
+}
+
+.darker {
+  background-color: #C8E7FB;
+  text-align: right;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.container > p{
+    margin-bottom: 0em !important;
+}
+
+.cl{
+    margin-right: 20px;
+}
+
+.cr{
+    margin-left: 20px;
+}
+
+.container img {
+  float: left;
+  max-width: 60px;
+  width: 90%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.container img.right {
+  float: right;
+  margin-left: 20px;
+  margin-right:0;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+/* end of chat css */
+
+.rp-footer{
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 200px;
-    height: 100px;
-    margin: auto;
+    bottom: 0px;
+    width: 35%;
+    margin-bottom: 3px;
+    min-height: 80px;
 }
 
-.loader div{
-    font-size: 60px;
-    margin-left: 30px;
+.footer-attach-box{
+    background-color: #fafafa;    
 }
 
+.footer-attach-box-icon{
+    padding: 5px;
+}
+
+.input-l-box{
+    float: left;
+    min-height: 80px;
+    width: 75%;
+}
+
+.sendBtn{
+    margin-top: 20%;
+    width: 50px;  
+    margin-left: 5%;
+    padding: 0px !important;
+    height: 45px;
+}
+
+.send-r-box{
+    float: right;
+    min-height: 80px;
+    width: 25%;
+}
